@@ -10,10 +10,18 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
-    
+
+def make_admin():
+    with app.app_context():
+        admin = Admin(username="Aditi", email="aditi@gmail.com", password="Admin123")
+        if not Admin.query.first():
+            db.session.add(admin)
+            db.session.commit()
+
 @app.route("/")
 def home():
     return render_template("home.html")
 
 if __name__ == "__main__":
+    make_admin()
     app.run()
