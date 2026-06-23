@@ -8,6 +8,12 @@
 <body>
     <h1>Register</h1>
     <form action="/register" method="post">
+        <br>
+        <select name="role">
+            <option value="Patient">Patient</option>
+            <option value="Doctor">Doctor</option>
+        </select>
+        <br>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br>
 

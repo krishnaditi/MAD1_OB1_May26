@@ -7,11 +7,13 @@ class Admin(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    role = db.Column(db.String(20), default='admin')
     doctor = db.relationship('Doctor', backref='admin', lazy=True)
 
 class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
     doctors = db.relationship('Doctor', backref='department', lazy=True)
     appointments = db.relationship('Appointment', backref='department', lazy=True)
 
@@ -20,15 +22,18 @@ class Doctor(db.Model):
     name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable = True)
+    status = db.Column(db.String(20), default='rejected')
+    role = db.Column(db.String(20), default='doctor')
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=True)
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'), nullable=True)
-    appointment = db.relationship('Appointment', backref = 'doctor', lazy=True)
+    appointment = db.relationship('Appointment', backref='doctor', lazy=True)
 
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    role = db.Column(db.String(20), default='patient')
     appointments = db.relationship('Appointment', backref='patient', lazy=True)
 
 class Appointment(db.Model):
