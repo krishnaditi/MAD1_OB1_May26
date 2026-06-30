@@ -9,6 +9,11 @@
     <h1>Welcome to the Admin Dashboard</h1>
     <p>Here you can manage doctors, patients, and appointments.</p>
 
+    <form action="/search" method="POST">
+        <input type="text" id="search" name="search" placeholder="Search Doctors">
+        <button type="submit">Search</button>
+    </form>
+
     <button><a href="/create_department">Create Department</a></button>
 
     <table>

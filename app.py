@@ -132,6 +132,15 @@ def delete_department(department_id):
         db.session.commit()
     return redirect(url_for("admin_dashboard"))
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    department = Department.query.all()
+    if request.method == "POST":
+        query = request.form.get("search")
+        doctor = Doctor.query.filter(Doctor.name.contains(query)).all()
+        return render_template("admin_dashboard.html", doctor=doctor, department=department)
+    return redirect(url_for("admin_dashboard"))
+
 if __name__ == "__main__":
     make_admin()
     app.run()
